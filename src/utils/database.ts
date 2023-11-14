@@ -1,9 +1,12 @@
-import { Pool } from "pg";
+const { Pool } = require("pg");
+require("dotenv").config();
 
-new Pool({
-  user: "postgres",
-  password: "secretPass",
-  host: "localhost",
-  port: 5432,
-  database,
-});
+let conn: any;
+
+if (!conn) {
+  conn = new Pool({
+    connectionString:
+      "postgres://:@ep-billowing-wind-02543254-pooler.us-east-1.postgres.vercel-storage.com:5432/verceldb?sslmode=require",
+  });
+}
+export { conn };
