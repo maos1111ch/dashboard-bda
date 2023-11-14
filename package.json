@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "@vercel/postgres": "^0.5.1",
     "next": "14.0.2",
     "pg": "^8.11.3",
