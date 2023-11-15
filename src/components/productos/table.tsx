@@ -1,25 +1,22 @@
+import { generarResumenPedidosPorProducto } from "@/helpers/mock_data/resumen_pedidos_por_producto";
+import { generarProductos } from "@/helpers/mock_data/productos";
 import Link from "next/link";
-import { FC } from "react";
-import { ResumenPedidosPorProducto } from "@/types/negocio";
+import { FC, useEffect, useState } from "react";
+import { Pedido, Producto, ResumenPedidosPorProducto } from "@/types/negocio";
 
-interface VentasTableProps {
-  productos: ResumenPedidosPorProducto[];
+interface ProductosTableProps {
+  productos: Producto[];
 }
 
-const VentasTable: FC<VentasTableProps> = ({ productos }) => {
+const ProductosTable: FC<ProductosTableProps> = ({ productos }) => {
   return (
     <>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-base font-semibold leading-6 text-gray-900">
-              Resumen de ventas
+              Resumen de Productos
             </h1>
-            <p className="mt-2 text-sm text-gray-700">
-              A continuacion se presenta una lista exhaustiva de todas las
-              ventas realizadas por nuestra empresa durante el último año
-              fiscal. Incluye información específica sobre cada transacción.
-            </p>
           </div>
         </div>
         <div className="mt-8 flow-root">
@@ -38,7 +35,7 @@ const VentasTable: FC<VentasTableProps> = ({ productos }) => {
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Ventas
+                      Cantidad de Pedidos
                     </th>
                     <th
                       scope="col"
@@ -48,55 +45,45 @@ const VentasTable: FC<VentasTableProps> = ({ productos }) => {
                     </th>
                     <th
                       scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Precio
+                    </th>
+                    <th
+                      scope="col"
                       className="relative py-3.5 pl-3 pr-4 sm:pr-3"
                     >
-                      <span className="sr-only">Ver Detalle</span>
+                      <span className="sr-only">Ver Producto</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {productos.map((resumenProducto) => (
-                    <tr
-                      key={resumenProducto.producto.id_producto}
-                      className="even:bg-gray-50"
-                    >
+                  {productos.map((producto) => (
+                    <tr key={producto.id_producto} className="even:bg-gray-50">
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                        {resumenProducto.producto.nombre}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <div className="flex flex-col">
-                          <div className="grid grid-cols-2 border-t border-b">
-                            <span className="mr-2">Mensual</span>{" "}
-                            <span className="font-semibold text-right">
-                              $ {resumenProducto.monto.mensual}
-                            </span>
-                          </div>
-                          <div className="grid grid-cols-2 border-b">
-                            <span className="mr-2">Trimestral</span>{" "}
-                            <span className="font-semibold text-right">
-                              $ {resumenProducto.monto.trimestral}
-                            </span>
-                          </div>
-                          <div className="grid grid-cols-2 border-b">
-                            <span className="mr-2">Anual</span>{" "}
-                            <span className="font-semibold text-right">
-                              $ {resumenProducto.monto.anual}
-                            </span>
-                          </div>
+                        <div className="grid grid-cols-2 w-32">
+                          <span className="text-gray-500 font-light">
+                            {producto.id_producto}
+                          </span>{" "}
+                          <span>{producto.nombre}</span>
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {resumenProducto.producto.categoria}
+                        {producto.detalles.length}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {producto.categoria}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        $ {producto.precio}
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                         <Link
-                          href={`/producto/${resumenProducto.producto.id_producto}`}
+                          href={`/producto/${producto.id_producto}`}
                           className="text-indigo-600 hover:text-indigo-900"
                         >
-                          Ver producto
-                          <span className="sr-only">
-                            , {resumenProducto.producto.nombre}
-                          </span>
+                          Ver Producto
+                          <span className="sr-only">, {producto.nombre}</span>
                         </Link>
                       </td>
                     </tr>
@@ -111,4 +98,4 @@ const VentasTable: FC<VentasTableProps> = ({ productos }) => {
   );
 };
 
-export default VentasTable;
+export default ProductosTable;

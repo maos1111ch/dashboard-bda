@@ -5,7 +5,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next/types";
 
 export const getServerSideProps = (async (context) => {
   const res = await fetch(`${process.env.API_URL}/api/productos`)
-  const { data: productos } = await res.json()
+  const { data: productos }: {data: ResumenPedidosPorProducto[]} = await res.json()
   return { props: { productos } }
 }) satisfies GetServerSideProps<{
   productos: ResumenPedidosPorProducto[]

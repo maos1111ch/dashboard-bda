@@ -4,6 +4,10 @@ export type Producto = {
   descripcion: string;
   precio: number;
   categoria: string;
+  detalles: {
+    id_pedido: number;
+    cantidad: number;
+  }[];
 };
 
 export type Cliente = {
@@ -13,26 +17,29 @@ export type Cliente = {
   direccion: string;
   ciudad: string;
   pais: string;
+  pedidos: {
+    id_pedido: number;
+    fecha: Date;
+    estado_pedido: EstadosPedidos;
+    monto: number;
+  }[]
 };
-
-export type ResumenCliente = {
-  cliente: Cliente;
-  pedidos: Pedido[];
- }
 
 export type Pedido = {
   id_pedido: number;
   cliente: Cliente; 
   fecha: Date;
   estado_pedido: string;
-  detalles: DetallePedido[]
-}
-
-export type DetallePedido = {
-  id_detalle_pedido: number;
-  precio_unitario: number;
-  producto: Producto;
-  cantidad: number;
+  detalles: {
+    precio_unitario: number;
+    cantidad: number;
+    producto: {
+      id_producto: number;
+      nombre: string;
+      categoria: string;
+    }
+  }[];
+  total: number;
 }
 
 export type ResumenPedidosPorProducto = {
