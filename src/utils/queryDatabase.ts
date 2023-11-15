@@ -13,10 +13,15 @@ export {
   getPedidosByProducto,
   getFacturacionMes,
   getFacturacionQ,
+  getClientes,
 };
 
 const getClienteById = async (idCliente: number) => {
   return await sql`select * from clientes where id_cliente = ${idCliente};`;
+};
+
+const getClientes = async () => {
+  return await sql`select * from clientes;`;
 };
 
 const getPedidoById = async (idPedido: number) => {
