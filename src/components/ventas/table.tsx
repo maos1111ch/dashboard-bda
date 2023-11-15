@@ -1,16 +1,13 @@
-import { generarPedidosPorProducto } from "@/helpers/mock_data/pedidos_por_producto";
+import { generarResumenPedidosPorProducto } from "@/helpers/mock_data/resumen_pedidos_por_producto";
 import { generarProductos } from "@/helpers/mock_data/productos";
-import { Producto } from "@/types/negocio";
+import Link from "next/link";
 import { FC } from "react";
-
-
-
 
 interface VentasTableProps {}
 
 const VentasTable: FC<VentasTableProps> = ({}) => {
   const productos = generarProductos(10);
-  const resumenPedidosPorProducto = generarPedidosPorProducto(productos);
+  const resumenPedidosPorProducto = generarResumenPedidosPorProducto(productos);
   return (
     <>
       <div className="px-4 sm:px-6 lg:px-8">
@@ -82,12 +79,12 @@ const VentasTable: FC<VentasTableProps> = ({}) => {
                         {resumenProducto.producto.categoria}
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                        <a
-                          href="#"
+                        <Link
+                          href={`/producto/${resumenProducto.producto.id_producto}`}
                           className="text-indigo-600 hover:text-indigo-900"
                         >
                           Ver producto<span className="sr-only">, {resumenProducto.producto.nombre}</span>
-                        </a>
+                        </Link>
                       </td>
                     </tr>
                   ))}

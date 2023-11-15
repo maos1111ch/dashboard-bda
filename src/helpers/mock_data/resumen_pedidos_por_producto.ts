@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { ResumenPedidosPorProducto, Producto } from "@/types/negocio";
 
 
-export const generarPedidosPorProducto = (productos: Producto[]): ResumenPedidosPorProducto[] => (productos.map((producto) => ({
+export const generarResumenPedidosPorProducto = (productos: Producto[]): ResumenPedidosPorProducto[] => (productos.map((producto) => ({
   producto,
   monto: {
     mensual: Math.trunc(faker.number.float({ min: 1000, max: 5000 }) * 100) / 100,
