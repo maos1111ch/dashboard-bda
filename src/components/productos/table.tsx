@@ -1,5 +1,3 @@
-import { generarResumenPedidosPorProducto } from "@/helpers/mock_data/resumen_pedidos_por_producto";
-import { generarProductos } from "@/helpers/mock_data/productos";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { Pedido, Producto, ResumenPedidosPorProducto } from "@/types/negocio";

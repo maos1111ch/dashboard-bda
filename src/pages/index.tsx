@@ -1,7 +1,5 @@
 import Objetivo from "@/components/objetivos/objetivo";
 import VentasTable from "@/components/ventas/table";
-import { generarProductos } from "@/helpers/mock_data/productos";
-import { generarResumenPedidosPorProducto } from "@/helpers/mock_data/resumen_pedidos_por_producto";
 import { Resumen, ResumenPedidosPorProducto } from "@/types/negocio";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next/types";
 import { useState, useEffect } from "react";

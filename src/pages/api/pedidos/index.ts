@@ -1,4 +1,3 @@
-import { generarPedidos } from "@/helpers/mock_data/pedidos";
 import { sql } from "@vercel/postgres";
 import { NextApiResponse, NextApiRequest } from "next";
 

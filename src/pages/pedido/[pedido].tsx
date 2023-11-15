@@ -1,4 +1,3 @@
-import { generarPedido } from "@/helpers/mock_data/pedidos";
 import { Pedido } from "@/types/negocio";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
