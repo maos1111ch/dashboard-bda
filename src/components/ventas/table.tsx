@@ -4,23 +4,11 @@ import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { Producto, ResumenPedidosPorProducto } from "@/types/negocio";
 
-interface VentasTableProps {}
+interface VentasTableProps {
+  productos: ResumenPedidosPorProducto[];
+}
 
-const VentasTable: FC<VentasTableProps> = ({}) => {
-  const [resumenPedidosPorProducto, setResumenPedidosPorProducto] =
-    useState<ResumenPedidosPorProducto[]>();
-
-  useEffect(() => {
-    const productosGenerados = generarProductos(10);
-    setResumenPedidosPorProducto(
-      generarResumenPedidosPorProducto(productosGenerados)
-    );
-  }, []);
-
-  if (!resumenPedidosPorProducto) {
-    return <div>Loading...</div>;
-  }
-
+const VentasTable: FC<VentasTableProps> = ({ productos }) => {
   return (
     <>
       <div className="px-4 sm:px-6 lg:px-8">
@@ -69,7 +57,7 @@ const VentasTable: FC<VentasTableProps> = ({}) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {resumenPedidosPorProducto.map((resumenProducto) => (
+                  {productos.map((resumenProducto) => (
                     <tr
                       key={resumenProducto.producto.id_producto}
                       className="even:bg-gray-50"

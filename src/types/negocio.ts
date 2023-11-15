@@ -15,6 +15,11 @@ export type Cliente = {
   pais: string;
 };
 
+export type ResumenCliente = {
+  cliente: Cliente;
+  pedidos: Pedido[];
+ }
+
 export type Pedido = {
   id_pedido: number;
   cliente: Cliente; 

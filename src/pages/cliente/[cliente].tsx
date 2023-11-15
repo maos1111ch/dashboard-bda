@@ -1,29 +1,28 @@
-import { generarPedidos } from "@/helpers/mock_data/pedidos";
-import { generarProductos } from "@/helpers/mock_data/productos";
-import { generarResumenPedidosPorProducto } from "@/helpers/mock_data/resumen_pedidos_por_producto";
-import { Pedido } from "@/types/negocio";
-import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { ResumenCliente } from "@/types/negocio";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next/types";
 
-interface ClienteProps {}
+interface ClienteIndexProps {
+  cliente: ResumenCliente
+}
 
-const Cliente: FC<ClienteProps> = () => {
-  const router = useRouter();
-  const [pedidos, setPedidos] = useState<Pedido[]>();
+export const getServerSideProps = (async (context) => {
+  const res = await fetch(`${process.env.API_URL}/api/productos`)
+  const { data: resumenCliente } = await res.json()
+  return { props: { resumenCliente } }
+}) satisfies GetServerSideProps<{
+  resumenCliente: ResumenCliente
+}>
 
-  useEffect(() => {
-    setPedidos(generarPedidos(Math.floor(Math.random() * 5)));
-  }, []);
+export default function Index({
+  resumenCliente: { cliente, pedidos },
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
-  if (!pedidos) {
-    return <div>Loading...</div>;
-  }
   return (
     <>
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:pb-32 sm:pt-24 lg:px-8">
         <div className="max-w-xl">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            Your Orders
+            ${cliente.nombre} Orders
           </h1>
           <p className="mt-2 text-sm text-gray-500">
             Check the status of recent orders, manage returns, and discover
@@ -97,5 +96,3 @@ const Cliente: FC<ClienteProps> = () => {
     </>
   );
 };
-
-export default Cliente;
