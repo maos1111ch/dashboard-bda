@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getFacturacionMes, getFacturacionTotal } from "@/utils/queryDatabase";
+import { ResumenPedidos } from "@/types/negocio";
 
 function obtenerNombreMes(numeroMes: number) {
   const meses = [
@@ -36,16 +37,21 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
       ];
 
       // Inicializar la respuesta
-      const dataResponse = {
+      const dataResponse: ResumenPedidos = {
         ventas_anuales: {
           total: parseFloat(dataFacturacionTotal.valor_total_entregado),
           trimestres: [],
         },
       };
 
+
       // Recorrer trimestres
       for (const trimestre of trimestres) {
-        const trimestreData = {
+        const trimestreData: {
+          nombre: string;
+          total: number;
+          meses: { total: number; nombre: string;}[]
+        } = {
           nombre: trimestre.nombre,
           total: 0, // Inicializar total del trimestre
           meses: [],
@@ -58,7 +64,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
           );
           trimestreData.total += valorMes;
 
-          const mesData = {
+          const mesData: { total: number; nombre: string;} = {
             total: valorMes,
             nombre: obtenerNombreMes(mes),
           };
@@ -67,7 +73,6 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
         }
 
         dataResponse.ventas_anuales.trimestres.push(trimestreData);
-        dataResponse.ventas_anuales.total += trimestreData.total;
       }
 
       response
