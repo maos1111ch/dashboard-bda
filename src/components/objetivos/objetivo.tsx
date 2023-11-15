@@ -1,3 +1,4 @@
+import { Resumen } from '@/types/negocio';
 import React, { FC } from 'react';
 
 function getTextColor(hexColor: string){
@@ -5,7 +6,6 @@ function getTextColor(hexColor: string){
   const g = parseInt(hexColor.substring(3,2), 16);
   const b = parseInt(hexColor.substring(5,2), 16);
   const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-  console.log(yiq)
   return yiq >= 90 ? 'text-white' : 'text-black';
 }
 
@@ -19,7 +19,11 @@ function getRandomColor () {
   return color;
 };
 
-const Objetivo: FC<{shortcut:any}> = ({shortcut}:{shortcut:any}) => {
+interface ObjetivoProps {
+  shortcut: Resumen;
+}
+
+const Objetivo: FC<ObjetivoProps> = ({ shortcut }) => {
   const color = getRandomColor()
   const textColor = getTextColor(color);
   return (

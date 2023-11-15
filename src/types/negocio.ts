@@ -22,7 +22,12 @@ export type Cliente = {
     fecha: Date;
     estado_pedido: EstadosPedidos;
     monto: number;
-  }[]
+  }[];
+};
+
+export type Resumen = {
+  title: string;
+  value: string;
 };
 
 export type Pedido = {
@@ -33,7 +38,7 @@ export type Pedido = {
     ciudad: string;
     pais: string;
     direccion: string;
-  }; 
+  };
   fecha: Date;
   estado_pedido: string;
   detalles: {
@@ -43,9 +48,30 @@ export type Pedido = {
       id_producto: number;
       nombre: string;
       categoria: string;
-    }
+    };
   }[];
   total: number;
+};
+
+export type Objetivo = { 
+  id_objetivo: number;
+  objetivo: string;
+  valor: number;
+}
+
+
+export type ResumenPedidos = {
+  ventas_anuales: {
+    total: number;
+    trimestres: {
+      total: number;
+      nombre: string;
+      meses: {
+        total: number;
+        nombre: string;
+      }[]
+    }[]
+  }
 }
 
 export type ResumenPedidosPorProducto = {
@@ -60,9 +86,9 @@ export type ResumenPedidosPorProducto = {
 export type VentasPorCategoria = {
   categoria: string;
   productos: ResumenPedidosPorProducto[];
-}
+};
 
 export enum EstadosPedidos {
-  EnProceso = 'En proceso',
-  Entregado = 'Entregado'
+  EnProceso = "En proceso",
+  Entregado = "Entregado",
 }
