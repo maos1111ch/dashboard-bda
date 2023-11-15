@@ -1,5 +1,5 @@
 import {
-  getCliente,
+  getClienteById,
   getMontoPedido,
   getPedidoByCliente,
 } from "@/utils/queryDatabase";
@@ -18,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (method) {
     case "GET":
-      const [cliente] = (await getCliente(parseInt(id))).rows;
+      const [cliente] = (await getClienteById(parseInt(id))).rows;
       if (!cliente) {
         res.status(400).json({
           success: false,

@@ -1,13 +1,27 @@
 import { sql } from "@vercel/postgres";
 
-export { getCliente, getPedidoByCliente, getMontoPedido };
+export {
+  getClienteById,
+  getPedidoByCliente,
+  getMontoPedido,
+  getPedidoById,
+  getDetallesPedido,
+};
 
-const getCliente = async (idCliente: number) => {
+const getClienteById = async (idCliente: number) => {
   return await sql`select * from clientes where id_cliente = ${idCliente};`;
+};
+
+const getPedidoById = async (idPedido: number) => {
+  return await sql`select * from pedidos where id_pedido = ${idPedido};`;
 };
 
 const getPedidoByCliente = async (idCliente: number) => {
   return await sql`select * from pedidos where id_cliente = ${idCliente};`;
+};
+
+const getDetallesPedido = async (idPedido: number) => {
+  return await sql`select * from detalles_pedido  where id_pedido = ${idPedido};`;
 };
 
 const getMontoPedido = async (idPedido: number) => {
