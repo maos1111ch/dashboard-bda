@@ -18,7 +18,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
       const ventasObj: { [key: string]: number } = {};
       dataFacturacionMeses.forEach((item) => {
         const mesNumero = parseInt(item.mes.split("-")[1], 10);
-        ventasObj[`ventas_${mesNumero.toString().padStart(2, "0")}`] =
+        ventasObj[`ventas_m${mesNumero.toString().padStart(2, "0")}`] =
           parseFloat(item.valor_total_ventas);
       });
 
