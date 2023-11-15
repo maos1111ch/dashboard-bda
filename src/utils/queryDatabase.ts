@@ -11,7 +11,7 @@ export {
   getCantidadClientes,
   getProductoById,
   getPedidosByProducto,
-  getFacturacionFechas,
+  getFacturacionMes,
   getFacturacionQ,
 };
 
@@ -48,10 +48,14 @@ const getMontoPedido = async (idPedido: number) => {
 };
 
 const getFacturacionTotal = async () => {
-  return await sql`SELECT
-    COALESCE(SUM(dp.cantidad * dp.precio_unitario), 0) AS valor_total_ventas
+  return await sql` SELECT
+    COALESCE(CAST(SUM(dp.cantidad * dp.precio_unitario) AS NUMERIC), 0) AS valor_total_entregado
   FROM
-    Detalles_pedido dp;`;
+    Detalles_pedido dp
+    JOIN Pedidos p ON dp.id_pedido = p.id_pedido
+  WHERE
+    p.estado_pedido = 'Entregado';
+  `;
 };
 
 const getCantidadVentas = async () => {
@@ -73,37 +77,45 @@ const getPedidosByProducto = async (idProducto: number) => {
   return await sql`SELECT id_pedido, cantidad FROM detalles_pedido where id_producto = ${idProducto}`;
 };
 
-const getFacturacionFechas = async () => {
-  return await sql`SELECT
-    to_char(p.fecha_pedido, 'YYYY-MM') AS mes,
-    COALESCE(SUM(dp.cantidad * dp.precio_unitario), 0) AS valor_total_ventas
+const getFacturacionMes = async () => {
+  return await sql`
+  SELECT
+    EXTRACT(MONTH FROM p.fecha_pedido) AS mes,
+    COALESCE(SUM(dp.cantidad * dp.precio_unitario), 0) AS valor_total_entregado
   FROM
     Detalles_pedido dp
-  JOIN
-    Pedidos p ON dp.id_pedido = p.id_pedido
+    JOIN Pedidos p ON dp.id_pedido = p.id_pedido
+  WHERE
+    p.estado_pedido = 'Entregado'
   GROUP BY
     mes
-  ORDER BY
-    mes;`;
+  `;
 };
 
 const getFacturacionQ = async () => {
-  return await sql`WITH Quartiles AS (
+  return await sql`WITH Trimestres AS (
     SELECT
-      dp.id_producto,
-      dp.cantidad * dp.precio_unitario AS valor_venta,
-      NTILE(4) OVER (ORDER BY dp.cantidad * dp.precio_unitario) AS cuartil
+      p.id_pedido,
+      dp.cantidad * dp.precio_unitario AS valor_pedido,
+      CASE
+        WHEN EXTRACT(MONTH FROM p.fecha_pedido) BETWEEN 1 AND 3 THEN 'Primer Trimestre'
+        WHEN EXTRACT(MONTH FROM p.fecha_pedido) BETWEEN 4 AND 6 THEN 'Segundo Trimestre'
+        WHEN EXTRACT(MONTH FROM p.fecha_pedido) BETWEEN 7 AND 9 THEN 'Tercer Trimestre'
+        WHEN EXTRACT(MONTH FROM p.fecha_pedido) BETWEEN 10 AND 12 THEN 'Cuarto Trimestre'
+      END AS trimestre
     FROM
       Detalles_pedido dp
+      JOIN Pedidos p ON dp.id_pedido = p.id_pedido
+    WHERE
+      p.estado_pedido = 'Entregado'
   )
   SELECT
-    cuartil,
-    COALESCE(SUM(valor_venta), 0) AS valor_total_cuartil
+    trimestre,
+    COALESCE(SUM(valor_pedido), 0) AS valor_total_trimestre
   FROM
-    Quartiles
+    Trimestres
   GROUP BY
-    cuartil
-  ORDER BY
-    cuartil;
+    trimestre
+  
   `;
 };
