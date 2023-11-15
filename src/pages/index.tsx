@@ -8,30 +8,27 @@ import { useState, useEffect } from "react";
 
 export const getServerSideProps = (async (context) => {
   const res = await fetch(`${process.env.API_URL}/api/productos`);
-  // const { data: productos }: {data: ResumenPedidosPorProducto[]} = await res.json()
+  const { data: productos }: {data: ResumenPedidosPorProducto[]} = await res.json()
   const { data: resumen }: { data: Resumen[] } = await (
     await fetch(`${process.env.API_URL}/api/shortcuts`)
   ).json();
-  const productos = null;
+
+  if(!productos) {
+    return {
+      notFound: true
+    }
+  }
   return { props: { productos, resumen } };
 }) satisfies GetServerSideProps<{
-  productos: ResumenPedidosPorProducto[] | null;
+  productos: ResumenPedidosPorProducto[];
   resumen: Resumen[];
 }>;
 
 export default function Index({
   resumen,
+  productos
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [productos, setProductos] = useState<ResumenPedidosPorProducto[]>();
-
-  useEffect(() => {
-    const productos = generarProductos(10);
-    setProductos(generarResumenPedidosPorProducto(productos));
-  }, []);
-
-  if (!productos) {
-    return <>Loading...</>;
-  }
+  console.log(productos)
   return (
     <>
       <div className="w-full">

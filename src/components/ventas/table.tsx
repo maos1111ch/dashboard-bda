@@ -61,50 +61,50 @@ const VentasTable: FC<VentasTableProps> = ({ productos }) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {productos.map((resumenProducto) => (
+                  {productos.map((producto) => (
                     <tr
-                      key={resumenProducto.producto.id_producto}
+                      key={producto.id_producto}
                       className="even:bg-gray-50"
                     >
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                        {resumenProducto.producto.nombre}
+                        {producto.nombre}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         <div className="flex flex-col">
                           <div className="grid grid-cols-2 border-t border-b">
                             <span className="mr-2">Mensual</span>{" "}
                             <span className="font-semibold text-right">
-                              $ {resumenProducto.monto.mensual}
+                              $ {producto.monto?.mensual}
                             </span>
                           </div>
                           <div className="grid grid-cols-2 border-b">
                             <span className="mr-2">Trimestral</span>{" "}
                             <span className="font-semibold text-right">
-                              $ {resumenProducto.monto.trimestral}
+                              $ {producto.monto?.trimestral}
                             </span>
                           </div>
                           <div className="grid grid-cols-2 border-b">
                             <span className="mr-2">Anual</span>{" "}
                             <span className="font-semibold text-right">
-                              $ {resumenProducto.monto.anual}
+                              $ {producto.monto?.anual}
                             </span>
                           </div>
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {resumenProducto.producto.detalles.length}
+                        {producto.detalles?.length}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {resumenProducto.producto.categoria}
+                        {producto.categoria}
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                         <Link
-                          href={`/producto/${resumenProducto.producto.id_producto}`}
+                          href={`/producto/${producto.id_producto}`}
                           className="text-indigo-600 hover:text-indigo-900"
                         >
                           Ver producto
                           <span className="sr-only">
-                            , {resumenProducto.producto.nombre}
+                            , {producto.nombre}
                           </span>
                         </Link>
                       </td>

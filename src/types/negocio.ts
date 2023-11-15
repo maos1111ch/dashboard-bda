@@ -77,7 +77,15 @@ export type ResumenPedidos = {
 }
 
 export type ResumenPedidosPorProducto = {
-  producto: Producto;
+  id_producto: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  categoria: string;
+  detalles: {
+    id_pedido: number;
+    cantidad: number;
+  }[];
   monto: {
     mensual: number;
     trimestral: number;
