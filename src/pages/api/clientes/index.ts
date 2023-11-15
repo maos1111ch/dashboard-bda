@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         })
       );
 
-      res.status(200).json({ success: true, message: "OK", data: clientes });
+      res.status(200).json({ success: true, message: "OK.", data: clientes });
       break;
     default:
       res
