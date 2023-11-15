@@ -14,6 +14,53 @@ export {
   getFacturacionMes,
   getFacturacionQ,
   getClientes,
+  getProductos,
+  getValoresDeVenta,
+};
+
+const getValoresDeVenta = async (idProducto: number) => {
+  return await sql`-- Obtener valores de venta de un producto en el último mes, trimestre y año
+  WITH Periodos AS (
+    SELECT
+      dp.id_producto,
+      dp.cantidad * dp.precio_unitario AS valor_venta,
+      EXTRACT(MONTH FROM p.fecha_pedido) AS mes,
+      CEIL(EXTRACT(MONTH FROM p.fecha_pedido) / 3.0) AS trimestre,
+      EXTRACT(YEAR FROM p.fecha_pedido) AS ano
+    FROM
+      Detalles_pedido dp
+      JOIN Pedidos p ON dp.id_pedido = p.id_pedido
+    WHERE
+      dp.id_producto = ${idProducto}
+      AND p.estado_pedido = 'Entregado'
+  )
+  SELECT
+    'Mes' AS periodo,
+    COALESCE(SUM(valor_venta), 0) AS valor_total_venta
+  FROM
+    Periodos
+  WHERE
+    mes = EXTRACT(MONTH FROM CURRENT_DATE)
+  UNION ALL
+  SELECT
+    'Trimestre' AS periodo,
+    COALESCE(SUM(valor_venta), 0) AS valor_total_venta
+  FROM
+    Periodos
+  WHERE
+    trimestre = CEIL(EXTRACT(MONTH FROM CURRENT_DATE) / 3.0)
+  UNION ALL
+  SELECT
+    'Año' AS periodo,
+    COALESCE(SUM(valor_venta), 0) AS valor_total_venta
+  FROM
+    Periodos
+  WHERE
+    ano = EXTRACT(YEAR FROM CURRENT_DATE);
+  `;
+};
+const getProductos = async () => {
+  return await sql`select * from productos;`;
 };
 
 const getClienteById = async (idCliente: number) => {
