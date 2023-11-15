@@ -43,10 +43,85 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
       };
 
       const dataResponse = {
-        ventas_anuales: parseFloat(dataFacturacionTotal.valor_total_ventas),
-        ...ventasObj,
-        ...ventasQObj,
+        ventas_anuales: {
+          total: parseFloat(dataFacturacionTotal.valor_total_ventas),
+          trimestres: [
+            {
+              nombre: "ENE - MAR",
+              total: ventasQObj.ventas_q1,
+              meses: [
+                {
+                  total: ventasObj.ventas_m01,
+                  nombre: "ENERO",
+                },
+                {
+                  total: ventasObj.ventas_m02,
+                  nombre: "FEBRERO",
+                },
+                {
+                  total: ventasObj.ventas_m03,
+                  nombre: "MARZO",
+                },
+              ],
+            },
+            {
+              nombre: "ABR - JUN",
+              total: ventasQObj.ventas_q2,
+              meses: [
+                {
+                  total: ventasObj.ventas_m04,
+                  nombre: "ABRIL",
+                },
+                {
+                  total: ventasObj.ventas_m05,
+                  nombre: "MAYO",
+                },
+                {
+                  total: ventasObj.ventas_m06,
+                  nombre: "JUNIO",
+                },
+              ],
+            },
+            {
+              nombre: "JUL - SEP",
+              total: ventasQObj.ventas_q3,
+              meses: [
+                {
+                  total: ventasObj.ventas_m07,
+                  nombre: "JULIO",
+                },
+                {
+                  total: ventasObj.ventas_m08,
+                  nombre: "AGOSTO",
+                },
+                {
+                  total: ventasObj.ventas_m09,
+                  nombre: "SEPTIEMBRE",
+                },
+              ],
+            },
+            {
+              nombre: "OCT - DIC",
+              total: ventasQObj.ventas_q4,
+              meses: [
+                {
+                  total: ventasObj.ventas_m10,
+                  nombre: "OCTUBRE",
+                },
+                {
+                  total: ventasObj.ventas_m11,
+                  nombre: "NOVIMIEBRE",
+                },
+                {
+                  total: ventasObj.ventas_m12,
+                  nombre: "DICIEMBRE",
+                },
+              ],
+            },
+          ],
+        },
       };
+
       response
         .status(200)
         .json({ success: true, message: "OK", data: dataResponse });
