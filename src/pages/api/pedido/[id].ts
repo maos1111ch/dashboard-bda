@@ -31,7 +31,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
       await Promise.all(
         detalles.map(async (detalle) => {
           const [producto] = (
-            await getProductoById(parseInt(detalle.id_pedido))
+            await getProductoById(parseInt(detalle.id_producto))
           ).rows;
           detalle.producto = producto;
         })
