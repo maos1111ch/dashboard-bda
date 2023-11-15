@@ -27,7 +27,13 @@ export type Cliente = {
 
 export type Pedido = {
   id_pedido: number;
-  cliente: Cliente; 
+  cliente: {
+    id_cliente: number;
+    nombre: string;
+    ciudad: string;
+    pais: string;
+    direccion: string;
+  }; 
   fecha: Date;
   estado_pedido: string;
   detalles: {
