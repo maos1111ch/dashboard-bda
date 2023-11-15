@@ -3,7 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
   webpack: (config) => {
     config.resolve.fallback = { fs: false, dns: false, net: false, tls: false };
-
     return config;
   },
 };

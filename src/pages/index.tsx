@@ -1,3 +1,11 @@
-export default function index() {
-  return <div>hello</div>;
+import VentasTable from "@/components/ventas/table";
+
+
+
+export default function Index() {
+  return (
+    <>
+      <VentasTable />
+    </>
+  );
 }
