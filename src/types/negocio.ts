@@ -52,7 +52,7 @@ export type Pedido = {
       categoria: string;
     };
   }[];
-  total: number;
+  monto: number;
 };
 
 export type Objetivo = { 
