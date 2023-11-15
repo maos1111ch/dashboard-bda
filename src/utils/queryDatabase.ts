@@ -6,6 +6,9 @@ export {
   getMontoPedido,
   getPedidoById,
   getDetallesPedido,
+  getFacturacionTotal,
+  getCantidadVentas,
+  getCantidadClientes,
 };
 
 const getClienteById = async (idCliente: number) => {
@@ -38,4 +41,22 @@ const getMontoPedido = async (idPedido: number) => {
     GROUP BY
       p.id_pedido;
     `;
+};
+
+const getFacturacionTotal = async () => {
+  return await sql`SELECT
+    COALESCE(SUM(dp.cantidad * dp.precio_unitario), 0) AS valor_total_ventas
+  FROM
+    Detalles_pedido dp;`;
+};
+
+const getCantidadVentas = async () => {
+  return await sql`SELECT
+    COALESCE(SUM(dp.cantidad), 0) AS cantidad_total_ventas
+  FROM
+    Detalles_pedido dp;`;
+};
+
+const getCantidadClientes = async () => {
+  return await sql`SELECT count(*) as cantidad_clientes FROM clientes`;
 };
