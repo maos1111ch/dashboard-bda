@@ -7,11 +7,14 @@ import { Producto, ResumenPedidosPorProducto } from "@/types/negocio";
 interface VentasTableProps {}
 
 const VentasTable: FC<VentasTableProps> = ({}) => {
-  const [resumenPedidosPorProducto, setResumenPedidosPorProducto] = useState<ResumenPedidosPorProducto[]>();
+  const [resumenPedidosPorProducto, setResumenPedidosPorProducto] =
+    useState<ResumenPedidosPorProducto[]>();
 
   useEffect(() => {
     const productosGenerados = generarProductos(10);
-    setResumenPedidosPorProducto(generarResumenPedidosPorProducto(productosGenerados));
+    setResumenPedidosPorProducto(
+      generarResumenPedidosPorProducto(productosGenerados)
+    );
   }, []);
 
   if (!resumenPedidosPorProducto) {
@@ -27,7 +30,9 @@ const VentasTable: FC<VentasTableProps> = ({}) => {
               Resumen de ventas
             </h1>
             <p className="mt-2 text-sm text-gray-700">
-              A continuacion se presenta una lista exhaustiva de todas las ventas realizadas por nuestra empresa durante el último año fiscal. Incluye información específica sobre cada transacción.
+              A continuacion se presenta una lista exhaustiva de todas las
+              ventas realizadas por nuestra empresa durante el último año
+              fiscal. Incluye información específica sobre cada transacción.
             </p>
           </div>
         </div>
@@ -65,23 +70,32 @@ const VentasTable: FC<VentasTableProps> = ({}) => {
                 </thead>
                 <tbody className="bg-white">
                   {resumenPedidosPorProducto.map((resumenProducto) => (
-                    <tr key={resumenProducto.producto.id_producto} className="even:bg-gray-50">
+                    <tr
+                      key={resumenProducto.producto.id_producto}
+                      className="even:bg-gray-50"
+                    >
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
                         {resumenProducto.producto.nombre}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         <div className="flex flex-col">
                           <div className="grid grid-cols-2 border-t border-b">
-                          <span className="mr-2">Mensual</span> <span className="font-semibold">$ {resumenProducto.monto.mensual}</span>
-
+                            <span className="mr-2">Mensual</span>{" "}
+                            <span className="font-semibold text-right">
+                              $ {resumenProducto.monto.mensual}
+                            </span>
                           </div>
                           <div className="grid grid-cols-2 border-b">
-                          <span className="mr-2">Trimestral</span> <span className="font-semibold">$ {resumenProducto.monto.trimestral}</span>
-
+                            <span className="mr-2">Trimestral</span>{" "}
+                            <span className="font-semibold text-right">
+                              $ {resumenProducto.monto.trimestral}
+                            </span>
                           </div>
                           <div className="grid grid-cols-2 border-b">
-                          <span className="mr-2">Anual</span> <span className="font-semibold">$ {resumenProducto.monto.anual}</span>
-
+                            <span className="mr-2">Anual</span>{" "}
+                            <span className="font-semibold text-right">
+                              $ {resumenProducto.monto.anual}
+                            </span>
                           </div>
                         </div>
                       </td>
@@ -93,7 +107,10 @@ const VentasTable: FC<VentasTableProps> = ({}) => {
                           href={`/producto/${resumenProducto.producto.id_producto}`}
                           className="text-indigo-600 hover:text-indigo-900"
                         >
-                          Ver producto<span className="sr-only">, {resumenProducto.producto.nombre}</span>
+                          Ver producto
+                          <span className="sr-only">
+                            , {resumenProducto.producto.nombre}
+                          </span>
                         </Link>
                       </td>
                     </tr>
@@ -107,6 +124,5 @@ const VentasTable: FC<VentasTableProps> = ({}) => {
     </>
   );
 };
-
 
 export default VentasTable;

@@ -9,7 +9,7 @@ export type Producto = {
 export type Cliente = {
   id_cliente: number;
   nombre: string;
-  email: string;
+  correo_electronico: string;
   direccion: string;
   ciudad: string;
   pais: string;
@@ -17,9 +17,17 @@ export type Cliente = {
 
 export type Pedido = {
   id_pedido: number;
-  cantidad: number;
   cliente: Cliente; 
   fecha: Date;
+  estado_pedido: string;
+  detalles: DetallePedido[]
+}
+
+export type DetallePedido = {
+  id_detalle_pedido: number;
+  precio_unitario: number;
+  producto: Producto;
+  cantidad: number;
 }
 
 export type ResumenPedidosPorProducto = { 
@@ -33,5 +41,10 @@ export type ResumenPedidosPorProducto = {
 
 export type VentasPorCategoria = {
   categoria: string;
-  productos: Producto[];
+  productos: ResumenPedidosPorProducto[];
+}
+
+export enum EstadosPedidos {
+  EnProceso = 'En proceso',
+  Entregado = 'Entregado'
 }
