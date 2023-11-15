@@ -13,7 +13,7 @@ export type Cliente = {
   direccion: string;
   ciudad: string;
   pais: string;
-}
+};
 
 export type Pedido = {
   id_pedido: number;
@@ -30,14 +30,14 @@ export type DetallePedido = {
   cantidad: number;
 }
 
-export type ResumenPedidosPorProducto = { 
+export type ResumenPedidosPorProducto = {
   producto: Producto;
   monto: {
     mensual: number;
     trimestral: number;
     anual: number;
-  }
-}
+  };
+};
 
 export type VentasPorCategoria = {
   categoria: string;
