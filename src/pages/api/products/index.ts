@@ -1,3 +1,5 @@
+import { sql } from "@vercel/postgres";
+
 import { NextApiResponse, NextApiRequest } from "next";
 export default (request: NextApiRequest, response: NextApiResponse) => {
   const { method } = request;
@@ -7,11 +9,6 @@ export default (request: NextApiRequest, response: NextApiResponse) => {
       response
         .status(200)
         .json({ success: false, message: "getting products", data: null });
-      break;
-    case "POST":
-      response
-        .status(200)
-        .json({ success: false, message: "creating products", data: null });
       break;
     default:
       response
