@@ -9,6 +9,8 @@ export {
   getFacturacionTotal,
   getCantidadVentas,
   getCantidadClientes,
+  getProductoById,
+  getPedidosByProducto,
 };
 
 const getClienteById = async (idCliente: number) => {
@@ -59,4 +61,12 @@ const getCantidadVentas = async () => {
 
 const getCantidadClientes = async () => {
   return await sql`SELECT count(*) as cantidad_clientes FROM clientes`;
+};
+
+const getProductoById = async (idProducto: number) => {
+  return await sql`SELECT * FROM productos where id_producto = ${idProducto}`;
+};
+
+const getPedidosByProducto = async (idProducto: number) => {
+  return await sql`SELECT id_pedido, cantidad FROM detalles_pedido where id_producto = ${idProducto}`;
 };

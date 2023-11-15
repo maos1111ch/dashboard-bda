@@ -16,15 +16,15 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
       const dataResponse = [
         {
-          tittle: "Facturacion total",
+          title: "Facturacion total",
           value: parseFloat(dataFacturacion.valor_total_ventas),
         },
         {
-          tittle: "Total de ventas",
+          title: "Total de ventas",
           value: parseInt(dataCantVentas.cantidad_total_ventas),
         },
         {
-          tittle: "Clientes Registrados",
+          title: "Clientes Registrados",
           value: parseInt(dataClientes.cantidad_clientes),
         },
       ];
