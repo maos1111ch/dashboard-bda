@@ -4,6 +4,7 @@ import {
   getDetallesPedido,
   getPedidoById,
   getMontoPedido,
+  getProductoById,
 } from "@/utils/queryDatabase";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
@@ -26,6 +27,15 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
         .rows;
       const [dataMonto] = (await getMontoPedido(parseInt(pedido.id_pedido)))
         .rows;
+
+      await Promise.all(
+        detalles.map(async (detalle) => {
+          const [producto] = (
+            await getProductoById(parseInt(detalle.id_pedido))
+          ).rows;
+          detalle.producto = producto;
+        })
+      );
 
       const dataResponse = {
         ...pedido,
