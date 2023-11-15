@@ -42,14 +42,11 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
         ),
       };
 
-      const dataResponse = [
-        {
-          ventas_anuales: parseFloat(dataFacturacionTotal.valor_total_ventas),
-          ...ventasObj,
-          ...ventasQObj,
-        },
-      ];
-
+      const dataResponse = {
+        ventas_anuales: parseFloat(dataFacturacionTotal.valor_total_ventas),
+        ...ventasObj,
+        ...ventasQObj,
+      };
       response
         .status(200)
         .json({ success: true, message: "OK", data: dataResponse });
