@@ -7,12 +7,10 @@ import { Producto, ResumenPedidosPorProducto } from "@/types/negocio";
 interface VentasTableProps {}
 
 const VentasTable: FC<VentasTableProps> = ({}) => {
-  const [productos, setProductos] = useState<Producto[]>([]);
   const [resumenPedidosPorProducto, setResumenPedidosPorProducto] = useState<ResumenPedidosPorProducto[]>();
 
   useEffect(() => {
     const productosGenerados = generarProductos(10);
-    setProductos(productosGenerados);
     setResumenPedidosPorProducto(generarResumenPedidosPorProducto(productosGenerados));
   }, []);
 
