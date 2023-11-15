@@ -1,36 +1,31 @@
-import { generarCliente } from "@/helpers/mock_data/cliente";
 import { Cliente } from "@/types/negocio";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next/types";
-import { useEffect, useState } from "react";
 
 export const getServerSideProps = (async (context) => {
   const clienteId = context.params?.cliente;
   if (!clienteId || Array.isArray(clienteId)) {
-    return notFound();
+    return {
+      notFound: true,
+    }
   }
 
   const res = await fetch(`${process.env.API_URL}/api/cliente/${clienteId}`);
-  // const { data: cliente }: { data: Cliente} = await res.json()
-  const cliente = null;
+  const { data: cliente }: { data: Cliente} = await res.json()
+  if(!cliente) {
+    return {
+      notFound: true,
+    }
+  }
   return { props: { cliente } };
 }) satisfies GetServerSideProps<{
-  cliente: Cliente | null;
+  cliente: Cliente;
 }>;
 
-export default function Index({}: InferGetServerSidePropsType<
+export default function Index({ cliente }: InferGetServerSidePropsType<
   typeof getServerSideProps
 >) {
-  const [cliente, setCliente] = useState<Cliente>();
-
-  useEffect(() => {
-    setCliente(generarCliente());
-  }, []);
-
-  if (!cliente) {
-    return <>Loading...</>;
-  }
   return (
     <>
       <div className="flex flex-col">
@@ -73,7 +68,7 @@ export default function Index({}: InferGetServerSidePropsType<
                   className="text-lg font-normal text-gray-900 md:flex-shrink-0"
                 >
                   Pedido #{pedido.id_pedido.toString().padStart(8, "0")} - ${" "}
-                  {pedido.monto} - {pedido.fecha.toLocaleDateString()}
+                  {pedido.monto} - {new Date(pedido.fecha_pedido).toLocaleDateString()}
                 </h2>
                 <div className="space-y-5 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 md:min-w-0 md:flex-1">
                   <p className="text-sm font-medium text-gray-500">

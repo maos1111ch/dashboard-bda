@@ -19,7 +19,7 @@ export type Cliente = {
   pais: string;
   pedidos: {
     id_pedido: number;
-    fecha: Date;
+    fecha_pedido: string;
     estado_pedido: EstadosPedidos;
     monto: number;
   }[];
