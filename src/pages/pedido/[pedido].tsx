@@ -30,6 +30,7 @@ export const getServerSideProps = (async (context) => {
 export default function Index({ pedido }: InferGetServerSidePropsType<
   typeof getServerSideProps
 >) {
+  console.log(pedido)
   return (
     <>
       <div className="flex flex-col">
@@ -45,7 +46,7 @@ export default function Index({ pedido }: InferGetServerSidePropsType<
                     Pedido #{pedido.id_pedido.toString().padStart(8, '0')}
                   </p>
                   <p className="text-sm font-medium text-gray-600">
-                    {pedido.estado_pedido} - $ {pedido.total} - {new Date(pedido.fecha_pedido).toLocaleDateString()}
+                    {pedido.estado_pedido} - $ {pedido.monto} - {new Date(pedido.fecha_pedido).toLocaleDateString()}
                   </p>
                   <p className="text-sm font-medium text-gray-600">
                     N° de Productos: {pedido.detalles.length}
@@ -79,7 +80,7 @@ export default function Index({ pedido }: InferGetServerSidePropsType<
         </Link>
 
         <div className="border-b border-gray-300 my-5  w-full" />
-        <h1 className="mx-auto text-4xl font-light">Pedidos</h1>
+        <h1 className="mx-auto text-4xl font-light">Detalles del Pedido</h1>
         <div className="mt-12 space-y-8 sm:mt-16 min-h-screen w-1/2 mx-auto flex flex-col flex-wrap items-center">
           {pedido.detalles.map((detalle, index) => (
             <Link
@@ -93,7 +94,7 @@ export default function Index({ pedido }: InferGetServerSidePropsType<
                   id={`${index}-heading`}
                   className="text-lg font-normal text-gray-900 md:flex-shrink-0"
                 >
-                   ${" "}{detalle.precio_unitario} x {detalle.cantidad} un. - {detalle.producto?.id_producto}
+                   ${" "}{detalle.precio_unitario} x {detalle.cantidad} un. - {detalle.producto?.nombre}
                 </h2>
                 <div className="space-y-5 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 md:min-w-0 md:flex-1">
                   <p className="text-sm font-medium text-gray-500">
