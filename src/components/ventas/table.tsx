@@ -1,13 +1,25 @@
 import { generarResumenPedidosPorProducto } from "@/helpers/mock_data/resumen_pedidos_por_producto";
 import { generarProductos } from "@/helpers/mock_data/productos";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { Producto, ResumenPedidosPorProducto } from "@/types/negocio";
 
 interface VentasTableProps {}
 
 const VentasTable: FC<VentasTableProps> = ({}) => {
-  const productos = generarProductos(10);
-  const resumenPedidosPorProducto = generarResumenPedidosPorProducto(productos);
+  const [productos, setProductos] = useState<Producto[]>([]);
+  const [resumenPedidosPorProducto, setResumenPedidosPorProducto] = useState<ResumenPedidosPorProducto[]>();
+
+  useEffect(() => {
+    const productosGenerados = generarProductos(10);
+    setProductos(productosGenerados);
+    setResumenPedidosPorProducto(generarResumenPedidosPorProducto(productosGenerados));
+  }, []);
+
+  if (!resumenPedidosPorProducto) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <div className="px-4 sm:px-6 lg:px-8">
