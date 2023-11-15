@@ -28,7 +28,6 @@ export default function Index({
   resumen,
   productos
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(productos)
   return (
     <>
       <div className="w-full">

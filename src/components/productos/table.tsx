@@ -69,7 +69,7 @@ const ProductosTable: FC<ProductosTableProps> = ({ productos }) => {
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {producto.detalles.length}
+                        {producto.detalles?.length}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {producto.categoria}

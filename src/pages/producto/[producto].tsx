@@ -1,22 +1,30 @@
-import { generarProducto } from "@/helpers/mock_data/productos";
 import { Producto } from "@/types/negocio";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next/types";
 
-interface ProductoProps {
-}
-
-const Producto: FC<ProductoProps> = () => {
-  const [producto, setProducto] = useState<Producto>();
-
-  useEffect(() => {
-    setProducto(generarProducto());
-  }, []);
-
-  if (!producto) {
-    return <>Loading...</>;
+export const getServerSideProps = (async (context) => {
+  const productoId = context.params?.producto;
+  if (!productoId || Array.isArray(productoId)) {
+    return {
+      notFound: true,
+    }
   }
+
+  const res = await fetch(`${process.env.API_URL}/api/producto/${productoId}`);
+  const { data: producto }: { data: Producto} = await res.json()
+  if(!producto) {
+    return {
+      notFound: true,
+    }
+  }
+  return { props: { producto } };
+}) satisfies GetServerSideProps<{
+  producto: Producto;
+}>;
+
+export default function Index({ producto }: InferGetServerSidePropsType<
+  typeof getServerSideProps
+>) {
   return (
     <>
       <div className="flex flex-col">
@@ -84,5 +92,3 @@ const Producto: FC<ProductoProps> = () => {
     </>
   );
 }
-
-export default Producto;

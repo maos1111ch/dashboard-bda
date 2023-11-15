@@ -33,7 +33,6 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
         cliente,
         detalles,
       };
-      console.log("detalles", detalles);
 
       response
         .status(200)

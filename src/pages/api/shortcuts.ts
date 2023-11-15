@@ -13,7 +13,6 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
       const [dataFacturacion] = (await getFacturacionTotal()).rows;
       const [dataCantVentas] = (await getCantidadVentas()).rows;
       const [dataClientes] = (await getCantidadClientes()).rows;
-      console.log(dataFacturacion)
       const dataResponse = [
         {
           title: "Facturacion total",

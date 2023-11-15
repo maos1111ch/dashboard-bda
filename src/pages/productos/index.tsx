@@ -1,36 +1,22 @@
-import { generarProductos } from "@/helpers/mock_data/productos";
-import { FC, useEffect, useState } from "react";
 import ProductosTable from "@/components/productos/table";
 import { Cliente, Producto } from "@/types/negocio";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { notFound } from "next/navigation";
 
 export const getServerSideProps = (async (context) => {
-
-
-  const res = await fetch(`${process.env.API_URL}/api/productos`);
-  // const { data: cliente }: { data: Cliente} = await res.json()
-  const cliente = null;
-  return { props: { cliente } };
+  const { data: productos } = await (
+    await fetch(`${process.env.API_URL}/api/productos`)
+  ).json();
+  return { props: { productos } };
 }) satisfies GetServerSideProps<{
-  cliente: Cliente | null;
+  productos: Producto[];
 }>;
 
-export default function Index({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
-  const [productos, setProductos] = useState<Producto[]>();
-
-  useEffect(() => {
-    setProductos(generarProductos(10));
-  }, []);
-
-  if (!productos) {
-    return <>Loading...</>;
-  }
+export default function Index({
+  productos,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <ProductosTable productos={productos} />
     </>
   );
-};
+}
