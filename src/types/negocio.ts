@@ -39,9 +39,11 @@ export type Pedido = {
     pais: string;
     direccion: string;
   };
-  fecha: Date;
+  fecha_pedido: Date;
   estado_pedido: string;
   detalles: {
+    id_pedido: number;
+    id_producto: number;
     precio_unitario: number;
     cantidad: number;
     producto: {
