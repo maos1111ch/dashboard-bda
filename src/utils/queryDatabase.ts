@@ -11,6 +11,8 @@ export {
   getCantidadClientes,
   getProductoById,
   getPedidosByProducto,
+  getFacturacionFechas,
+  getFacturacionQ,
 };
 
 const getClienteById = async (idCliente: number) => {
@@ -69,4 +71,39 @@ const getProductoById = async (idProducto: number) => {
 
 const getPedidosByProducto = async (idProducto: number) => {
   return await sql`SELECT id_pedido, cantidad FROM detalles_pedido where id_producto = ${idProducto}`;
+};
+
+const getFacturacionFechas = async () => {
+  return await sql`SELECT
+    to_char(p.fecha_pedido, 'YYYY-MM') AS mes,
+    COALESCE(SUM(dp.cantidad * dp.precio_unitario), 0) AS valor_total_ventas
+  FROM
+    Detalles_pedido dp
+  JOIN
+    Pedidos p ON dp.id_pedido = p.id_pedido
+  GROUP BY
+    mes
+  ORDER BY
+    mes;`;
+};
+
+const getFacturacionQ = async () => {
+  return await sql`WITH Quartiles AS (
+    SELECT
+      dp.id_producto,
+      dp.cantidad * dp.precio_unitario AS valor_venta,
+      NTILE(4) OVER (ORDER BY dp.cantidad * dp.precio_unitario) AS cuartil
+    FROM
+      Detalles_pedido dp
+  )
+  SELECT
+    cuartil,
+    COALESCE(SUM(valor_venta), 0) AS valor_total_cuartil
+  FROM
+    Quartiles
+  GROUP BY
+    cuartil
+  ORDER BY
+    cuartil;
+  `;
 };
