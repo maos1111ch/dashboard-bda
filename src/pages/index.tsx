@@ -9,11 +9,11 @@ import { useState, useEffect } from "react";
 export const getServerSideProps = (async (context) => {
   const res = await fetch(`${process.env.API_URL}/api/productos`);
   // const { data: productos }: {data: ResumenPedidosPorProducto[]} = await res.json()
-  const { data: resResumen }: any = await (
+  const { data: resumen }: { data: Resumen[] } = await (
     await fetch(`${process.env.API_URL}/api/shortcuts`)
   ).json();
   const productos = null;
-  return { props: { productos, resumen: resResumen } };
+  return { props: { productos, resumen } };
 }) satisfies GetServerSideProps<{
   productos: ResumenPedidosPorProducto[] | null;
   resumen: Resumen[];
@@ -34,9 +34,15 @@ export default function Index({
   }
   return (
     <>
-      {resumen.map((shortcut: any) => (
-        <Objetivo shortcut={shortcut} bgcolor={'#000000'} />
-      ))}
+      <div className="w-full">
+        <div className="flex flex-row space-x-4 justify-center">
+          {resumen.map((resumen, index) => (
+            <div className="w-full" key={index}>
+              <Objetivo shortcut={resumen} />
+            </div>
+          ))}
+        </div>
+      </div>
       <VentasTable productos={productos} />
     </>
   );
