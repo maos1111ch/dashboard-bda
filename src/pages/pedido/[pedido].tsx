@@ -30,7 +30,6 @@ export const getServerSideProps = (async (context) => {
 export default function Index({ pedido }: InferGetServerSidePropsType<
   typeof getServerSideProps
 >) {
-  console.log(pedido)
   return (
     <>
       <div className="flex flex-col">

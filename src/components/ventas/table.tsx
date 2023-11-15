@@ -44,12 +44,6 @@ const VentasTable: FC<VentasTableProps> = ({ productos }) => {
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Ventas Totales
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
                       Categoria
                     </th>
                     <th
@@ -90,9 +84,6 @@ const VentasTable: FC<VentasTableProps> = ({ productos }) => {
                             </span>
                           </div>
                         </div>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {producto.detalles?.length}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {producto.categoria}
