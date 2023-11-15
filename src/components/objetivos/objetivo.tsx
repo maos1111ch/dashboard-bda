@@ -9,27 +9,17 @@ function getTextColor(hexColor: string){
   return yiq >= 90 ? 'text-white' : 'text-black';
 }
 
-
-function getRandomColor () {
-  const letters = '0123456789abcdef';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
-
 interface ObjetivoProps {
   shortcut: Resumen;
+  bgcolor: string;
 }
 
-const Objetivo: FC<ObjetivoProps> = ({ shortcut }) => {
-  const color = getRandomColor()
-  const textColor = getTextColor(color);
+const Objetivo: FC<ObjetivoProps> = ({ shortcut, bgcolor }) => {
+  const textColor = getTextColor(bgcolor);
   return (
     <div
           className={`rounded-md p-4 mb-4 ${textColor}`}
-          style={{ backgroundColor: color }}
+          style={{ backgroundColor: bgcolor }}
         >
           <h2 className="text-lg font-bold mb-2">{shortcut.title}</h2>
           <p>{shortcut.value}</p>
