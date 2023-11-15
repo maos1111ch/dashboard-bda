@@ -1,9 +1,11 @@
 import Sidebar from "@/components/layout/sidebar";
 import { FC } from "react";
 
-interface LayoutProps {}
+interface LayoutProps {
+  children: React.ReactNode
+}
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <div className="flex flex-row min-h-screen">

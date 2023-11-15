@@ -1,12 +1,15 @@
-const { Pool } = require("pg");
-require("dotenv").config();
+import { Pool } from "pg";
+import dotenv from 'dotenv'
+dotenv.config();
 
-let conn: any;
+let conn: Pool | undefined = undefined;
 
 if (!conn) {
   conn = new Pool({
     connectionString:
-      "postgres://:@ep-billowing-wind-02543254-pooler.us-east-1.postgres.vercel-storage.com:5432/verceldb?sslmode=require",
+      process.env.POSTGRES_URL + "?sslmode=require",
   });
 }
-export { conn };
+
+const connection = conn!
+export { connection };
